@@ -66,3 +66,16 @@ class Ledger:
         cat = normalize_category(category)
         ensure_positive_amount(amount)
         note = normalize_note(note)
+
+        tx = Transaction.new(tx_date=tx_date, tx_type=ttype,
+                             category=cat, amount=float(amount), note=note)
+        return self.add(tx)
+
+    def list_all(self) -> List[Transaction]:
+        return sorted(self._tx.values(), key=lambda t: (t.tx_date, t.tx_type, t.category, t.amount, t.id))
+
+    def get(self, tx_id: str) -> Optional[Transaction]:
+        return self._tx.get(tx_id)
+
+    def delete(self, tx_id: str) -> bool:
+        return self._tx.pop(tx_id, None) is not None

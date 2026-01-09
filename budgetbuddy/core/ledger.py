@@ -58,3 +58,11 @@ class Ledger:
             raise ValueError("Transaction id already exists.")
         self._tx[tx.id] = tx
         return tx
+
+    def create(self, tx_date: str, tx_type: str, category: str, amount: float, note: str = "") -> Transaction:
+        tx_date = tx_date.strip()
+        parse_date_iso(tx_date)
+        ttype = normalize_type(tx_type)
+        cat = normalize_category(category)
+        ensure_positive_amount(amount)
+        note = normalize_note(note)

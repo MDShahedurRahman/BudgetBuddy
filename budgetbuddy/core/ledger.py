@@ -144,3 +144,19 @@ class Ledger:
             out.append(t)
 
         return sorted(out, key=lambda t: (t.tx_date, t.tx_type, t.category, t.amount, t.id))
+
+    # ---- persistence helpers ----
+    def to_dict(self) -> Dict:
+        return {
+            "transactions": [
+                {
+                    "id": t.id,
+                    "tx_date": t.tx_date,
+                    "tx_type": t.tx_type,
+                    "category": t.category,
+                    "amount": t.amount,
+                    "note": t.note,
+                }
+                for t in self.list_all()
+            ]
+        }

@@ -160,3 +160,18 @@ class Ledger:
                 for t in self.list_all()
             ]
         }
+
+    @classmethod
+    def from_dict(cls, data: Dict) -> "Ledger":
+        led = cls()
+        for item in data.get("transactions", []):
+            tx = Transaction(
+                id=item["id"],
+                tx_date=item["tx_date"],
+                tx_type=item["tx_type"],
+                category=item["category"],
+                amount=float(item["amount"]),
+                note=item.get("note", "") or "",
+            )
+            led.add(tx)
+        return led

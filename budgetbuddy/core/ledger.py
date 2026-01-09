@@ -79,3 +79,40 @@ class Ledger:
 
     def delete(self, tx_id: str) -> bool:
         return self._tx.pop(tx_id, None) is not None
+
+    def update(
+        self,
+        tx_id: str,
+        tx_date: Optional[str] = None,
+        tx_type: Optional[str] = None,
+        category: Optional[str] = None,
+        amount: Optional[float] = None,
+        note: Optional[str] = None,
+    ) -> Transaction:
+        current = self._tx.get(tx_id)
+        if current is None:
+            raise KeyError("Transaction not found.")
+
+        new_date = current.tx_date if tx_date is None else tx_date.strip()
+        parse_date_iso(new_date)
+
+        new_type = current.tx_type if tx_type is None else normalize_type(
+            tx_type)
+        new_cat = current.category if category is None else normalize_category(
+            category)
+
+        new_amount = current.amount if amount is None else float(amount)
+        ensure_positive_amount(new_amount)
+
+        new_note = current.note if note is None else normalize_note(note)
+
+        updated = Transaction(
+            id=current.id,
+            tx_date=new_date,
+            tx_type=new_type,
+            category=new_cat,
+            amount=new_amount,
+            note=new_note,
+        )
+        self._tx[tx_id] = updated
+        return updated

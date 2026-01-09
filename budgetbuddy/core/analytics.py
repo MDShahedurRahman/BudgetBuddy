@@ -37,3 +37,15 @@ def top_categories(ledger: Ledger, month: str, n: int = 5, tx_type: str = "expen
     totals = category_totals(ledger, month=month, tx_type=tx_type)
     items = list(totals.items())
     return items[:n]
+
+
+def daily_spend_trend(ledger: Ledger, month: str) -> List[Tuple[str, float]]:
+    """
+    Returns list of (YYYY-MM-DD, total_expense_that_day) for the given month.
+    Only includes days that have at least one expense.
+    """
+    txs = ledger.filter(month=month, tx_type="expense")
+    totals: Dict[str, float] = {}
+    for t in txs:
+        totals[t.tx_date] = totals.get(t.tx_date, 0.0) + float(t.amount)
+    return sorted(totals.items(), key=lambda kv: kv[0])

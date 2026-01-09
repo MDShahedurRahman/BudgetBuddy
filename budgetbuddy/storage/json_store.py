@@ -9,6 +9,18 @@ from typing import Any, Dict
 from budgetbuddy.core.ledger import Ledger
 
 
+@dataclass(frozen=True)
+class StorePaths:
+    base_dir: Path
+    db_file: Path
+
+
+def get_paths() -> StorePaths:
+    home = Path(os.path.expanduser("~"))
+    base = home / ".budgetbuddy"
+    return StorePaths(base_dir=base, db_file=base / "db.json")
+
+
 class JsonStore:
     def __init__(self, db_file: Path | None = None) -> None:
         self.db_file = db_file or get_paths().db_file

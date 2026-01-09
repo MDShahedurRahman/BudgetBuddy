@@ -25,3 +25,10 @@ def normalize_category(cat: str) -> str:
 
 def normalize_note(note: str) -> str:
     return (note or "").strip()
+
+
+def normalize_type(t: str) -> TxType:
+    t = (t or "").strip().lower()
+    if t not in ("income", "expense"):
+        raise ValueError("Type must be 'income' or 'expense'.")
+    return t  # type: ignore[return-value]

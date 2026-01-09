@@ -9,3 +9,15 @@ from .models import Transaction, TxType
 
 def parse_date_iso(d: str) -> date:
     return date.fromisoformat(d)
+
+
+def ensure_positive_amount(amount: float) -> None:
+    if amount is None or float(amount) <= 0:
+        raise ValueError("Amount must be a positive number.")
+
+
+def normalize_category(cat: str) -> str:
+    cat = (cat or "").strip()
+    if not cat:
+        raise ValueError("Category cannot be empty.")
+    return cat

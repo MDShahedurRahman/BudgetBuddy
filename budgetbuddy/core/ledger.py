@@ -116,3 +116,31 @@ class Ledger:
         )
         self._tx[tx_id] = updated
         return updated
+
+    def filter(
+        self,
+        month: Optional[str] = None,        # "YYYY-MM"
+        category: Optional[str] = None,
+        tx_type: Optional[str] = None,      # income/expense
+    ) -> List[Transaction]:
+        month = (month or "").strip()
+        category = (category or "").strip()
+        tx_type = (tx_type or "").strip()
+
+        if month and (len(month) != 7 or month[4] != "-"):
+            raise ValueError("Month must be in YYYY-MM format.")
+
+        if tx_type:
+            tx_type = normalize_type(tx_type)
+
+        out: List[Transaction] = []
+        for t in self._tx.values():
+            if month and month_key(t.tx_date) != month:
+                continue
+            if category and t.category.lower() != category.lower():
+                continue
+            if tx_type and t.tx_type != tx_type:
+                continue
+            out.append(t)
+
+        return sorted(out, key=lambda t: (t.tx_date, t.tx_type, t.category, t.amount, t.id))

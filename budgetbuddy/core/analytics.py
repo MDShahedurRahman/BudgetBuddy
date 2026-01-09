@@ -29,3 +29,11 @@ def category_totals(ledger: Ledger, month: str, tx_type: str = "expense") -> Dic
         key = t.category
         totals[key] = totals.get(key, 0.0) + float(t.amount)
     return dict(sorted(totals.items(), key=lambda kv: (-kv[1], kv[0].lower())))
+
+
+def top_categories(ledger: Ledger, month: str, n: int = 5, tx_type: str = "expense") -> List[Tuple[str, float]]:
+    if n <= 0:
+        raise ValueError("n must be > 0")
+    totals = category_totals(ledger, month=month, tx_type=tx_type)
+    items = list(totals.items())
+    return items[:n]

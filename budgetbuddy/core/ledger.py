@@ -37,3 +37,24 @@ def normalize_type(t: str) -> TxType:
 def month_key(iso_date: str) -> str:
     # "YYYY-MM-DD" -> "YYYY-MM"
     return iso_date[:7]
+
+
+class Ledger:
+    """
+    Stores transactions and provides CRUD + filtering.
+    """
+
+    def __init__(self) -> None:
+        self._tx: Dict[str, Transaction] = {}
+
+    def add(self, tx: Transaction) -> Transaction:
+        # Validate
+        parse_date_iso(tx.tx_date)
+        normalize_type(tx.tx_type)
+        normalize_category(tx.category)
+        ensure_positive_amount(tx.amount)
+
+        if tx.id in self._tx:
+            raise ValueError("Transaction id already exists.")
+        self._tx[tx.id] = tx
+        return tx

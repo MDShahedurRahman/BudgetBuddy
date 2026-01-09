@@ -32,3 +32,8 @@ def normalize_type(t: str) -> TxType:
     if t not in ("income", "expense"):
         raise ValueError("Type must be 'income' or 'expense'.")
     return t  # type: ignore[return-value]
+
+
+def month_key(iso_date: str) -> str:
+    # "YYYY-MM-DD" -> "YYYY-MM"
+    return iso_date[:7]

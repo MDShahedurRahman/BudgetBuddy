@@ -21,3 +21,7 @@ def normalize_category(cat: str) -> str:
     if not cat:
         raise ValueError("Category cannot be empty.")
     return cat
+
+
+def normalize_note(note: str) -> str:
+    return (note or "").strip()

@@ -27,3 +27,12 @@ def test_top_categories_n():
 
     with pytest.raises(ValueError):
         top_categories(led, "2026-01", n=0)
+
+
+def test_daily_spend_trend():
+    led = Ledger()
+    led.create("2026-01-01", "expense", "Food", 10)
+    led.create("2026-01-01", "expense", "Food", 5)
+    led.create("2026-01-02", "expense", "Rent", 800)
+    trend = daily_spend_trend(led, "2026-01")
+    assert trend == [("2026-01-01", 15.0), ("2026-01-02", 800.0)]

@@ -79,5 +79,25 @@ def run() -> None:
                         _print_tx(t)
                     print()
 
+            elif choice == "4":
+                tx_id = _prompt("Transaction id: ")
+                tx_date = _prompt("New date (YYYY-MM-DD) [blank=keep]: ")
+                tx_type = _prompt("New type income/expense [blank=keep]: ")
+                category = _prompt("New category [blank=keep]: ")
+                amount_txt = _prompt("New amount [blank=keep]: ")
+                note = _prompt("New note [blank=keep]: ")
+
+                updated = ledger.update(
+                    tx_id,
+                    tx_date=tx_date or None,
+                    tx_type=tx_type or None,
+                    category=category or None,
+                    amount=float(amount_txt) if amount_txt else None,
+                    note=note or None,
+                )
+                print("Updated:")
+                _print_tx(updated)
+                print()
+
         except Exception as e:
             print(f"Error: {e}\n")

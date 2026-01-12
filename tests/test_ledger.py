@@ -9,3 +9,15 @@ def test_create_and_list_sorted():
     txs = led.list_all()
     assert len(txs) == 2
     assert txs[0].tx_date == "2026-01-01"
+
+
+def test_filter_by_month_and_type():
+    led = Ledger()
+    led.create("2026-01-02", "expense", "Food", 10)
+    led.create("2026-02-01", "expense", "Food", 20)
+    jan = led.filter(month="2026-01")
+    assert len(jan) == 1
+    assert jan[0].amount == 10.0
+
+    feb_exp = led.filter(month="2026-02", tx_type="expense")
+    assert len(feb_exp) == 1

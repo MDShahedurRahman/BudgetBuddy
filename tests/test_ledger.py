@@ -32,3 +32,9 @@ def test_update_and_delete():
 
     assert led.delete(tx.id) is True
     assert led.get(tx.id) is None
+
+
+def test_validation_amount_positive():
+    led = Ledger()
+    with pytest.raises(ValueError):
+        led.create("2026-01-01", "expense", "Food", 0)

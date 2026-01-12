@@ -15,3 +15,17 @@ def test_json_store_save_load(tmp_path):
     loaded = store.load()
     assert len(loaded.list_all()) == 1
     assert loaded.list_all()[0].category == "Salary"
+
+
+def test_csv_export_import(tmp_path):
+    led = Ledger()
+    led.create("2026-01-02", "expense", "Food", 12.5, "Lunch")
+
+    out = tmp_path / "export.csv"
+    export_csv(led, out)
+
+    imported = import_csv(out)
+    txs = imported.list_all()
+    assert len(txs) == 1
+    assert txs[0].category == "Food"
+    assert abs(txs[0].amount - 12.5) < 1e-9

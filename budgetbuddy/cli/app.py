@@ -136,5 +136,11 @@ def run() -> None:
                         print(f"{day}: {amt:.2f}")
                     print()
 
+            elif choice == "9":
+                out_path = Path(_prompt("CSV output path: ")
+                                ).expanduser().resolve()
+                export_csv(ledger, out_path)
+                print(f"Exported to {out_path}\n")
+
         except Exception as e:
             print(f"Error: {e}\n")

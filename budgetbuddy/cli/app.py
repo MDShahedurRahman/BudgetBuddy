@@ -104,5 +104,13 @@ def run() -> None:
                 ok = ledger.delete(tx_id)
                 print("Deleted.\n" if ok else "Not found.\n")
 
+            elif choice == "6":
+                month = _prompt("Month (YYYY-MM): ")
+                s = monthly_summary(ledger, month)
+                print(f"\nMonth: {s.month}")
+                print(f"Income : {s.income:.2f}")
+                print(f"Expense: {s.expense:.2f}")
+                print(f"Net    : {s.net:.2f}\n")
+
         except Exception as e:
             print(f"Error: {e}\n")

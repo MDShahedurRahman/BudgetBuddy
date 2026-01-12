@@ -99,5 +99,10 @@ def run() -> None:
                 _print_tx(updated)
                 print()
 
+            elif choice == "5":
+                tx_id = _prompt("Transaction id: ")
+                ok = ledger.delete(tx_id)
+                print("Deleted.\n" if ok else "Not found.\n")
+
         except Exception as e:
             print(f"Error: {e}\n")

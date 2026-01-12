@@ -38,3 +38,9 @@ def test_validation_amount_positive():
     led = Ledger()
     with pytest.raises(ValueError):
         led.create("2026-01-01", "expense", "Food", 0)
+
+
+def test_validation_type():
+    led = Ledger()
+    with pytest.raises(ValueError):
+        led.create("2026-01-01", "spend", "Food", 10)

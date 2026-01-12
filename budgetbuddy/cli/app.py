@@ -125,5 +125,16 @@ def run() -> None:
                         print(f"{cat}: {amt:.2f}")
                     print()
 
+            elif choice == "8":
+                month = _prompt("Month (YYYY-MM): ")
+                trend = daily_spend_trend(ledger, month)
+                if not trend:
+                    print("No expenses found.\n")
+                else:
+                    print()
+                    for day, amt in trend:
+                        print(f"{day}: {amt:.2f}")
+                    print()
+
         except Exception as e:
             print(f"Error: {e}\n")

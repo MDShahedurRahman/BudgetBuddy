@@ -21,3 +21,14 @@ def test_filter_by_month_and_type():
 
     feb_exp = led.filter(month="2026-02", tx_type="expense")
     assert len(feb_exp) == 1
+
+
+def test_update_and_delete():
+    led = Ledger()
+    tx = led.create("2026-01-02", "expense", "Food", 10)
+    updated = led.update(tx.id, amount=12.5, note="Dinner")
+    assert updated.amount == 12.5
+    assert updated.note == "Dinner"
+
+    assert led.delete(tx.id) is True
+    assert led.get(tx.id) is None

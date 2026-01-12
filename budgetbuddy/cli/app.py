@@ -66,5 +66,18 @@ def run() -> None:
                         _print_tx(t)
                     print()
 
+            elif choice == "3":
+                month = _prompt("Month (YYYY-MM) [blank=all]: ")
+                category = _prompt("Category [blank=all]: ")
+                tx_type = _prompt("Type income/expense [blank=all]: ")
+                txs = ledger.filter(
+                    month=month or None, category=category or None, tx_type=tx_type or None)
+                if not txs:
+                    print("No matches.\n")
+                else:
+                    for t in txs:
+                        _print_tx(t)
+                    print()
+
         except Exception as e:
             print(f"Error: {e}\n")

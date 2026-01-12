@@ -27,3 +27,20 @@ def export_csv(ledger: Ledger, path: Path) -> None:
                     "note": t.note,
                 }
             )
+
+
+def import_csv(path: Path) -> Ledger:
+    led = Ledger()
+    with path.open("r", newline="", encoding="utf-8") as f:
+        r = csv.DictReader(f)
+        for row in r:
+            tx = Transaction(
+                id=row["id"],
+                tx_date=row["tx_date"],
+                tx_type=row["tx_type"],  # validated by Ledger.add
+                category=row["category"],
+                amount=float(row["amount"]),
+                note=row.get("note", "") or "",
+            )
+            led.add(tx)
+    return led

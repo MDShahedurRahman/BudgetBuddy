@@ -57,5 +57,14 @@ def run() -> None:
                 ledger.create(tx_date, tx_type, category, amount, note)
                 print("Added.\n")
 
+            elif choice == "2":
+                txs = ledger.list_all()
+                if not txs:
+                    print("No transactions yet.\n")
+                else:
+                    for t in txs:
+                        _print_tx(t)
+                    print()
+
         except Exception as e:
             print(f"Error: {e}\n")

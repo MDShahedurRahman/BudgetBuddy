@@ -112,5 +112,18 @@ def run() -> None:
                 print(f"Expense: {s.expense:.2f}")
                 print(f"Net    : {s.net:.2f}\n")
 
+            elif choice == "7":
+                month = _prompt("Month (YYYY-MM): ")
+                n_txt = _prompt("Top N (default 5): ")
+                n = int(n_txt) if n_txt else 5
+                top = top_categories(ledger, month, n=n, tx_type="expense")
+                if not top:
+                    print("No expenses found.\n")
+                else:
+                    print()
+                    for cat, amt in top:
+                        print(f"{cat}: {amt:.2f}")
+                    print()
+
         except Exception as e:
             print(f"Error: {e}\n")

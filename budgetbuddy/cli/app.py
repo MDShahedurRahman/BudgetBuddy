@@ -24,3 +24,38 @@ BudgetBuddy 💰
 11) Save
 12) Quit
 """
+
+
+def _prompt(msg: str) -> str:
+    return input(msg).strip()
+
+
+def _print_tx(t) -> None:
+    print(f"{t.id} | {t.tx_date} | {t.tx_type:<7} | {t.category:<12} | {t.amount:>8.2f} | {t.note}")
+
+
+def run() -> None:
+    store = JsonStore()
+    ledger: Ledger = store.load()
+
+    while True:
+        print(MENU)
+        choice = _prompt("Choose (1-12): ")
+
+        if choice == "12":
+            store.save(ledger)
+            print("Saved. Bye!")
+            break
+
+        try:
+            if choice == "1":
+                tx_date = _prompt("Date (YYYY-MM-DD): ")
+                tx_type = _prompt("Type (income/expense): ")
+                category = _prompt("Category: ")
+                amount = float(_prompt("Amount: "))
+                note = _prompt("Note (optional): ")
+                ledger.create(tx_date, tx_type, category, amount, note)
+                print("Added.\n")
+
+        except Exception as e:
+            print(f"Error: {e}\n")

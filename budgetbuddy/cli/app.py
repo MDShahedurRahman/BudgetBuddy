@@ -148,5 +148,12 @@ def run() -> None:
                 ledger = import_csv(in_path)
                 print("Imported and replaced current ledger.\n")
 
+            elif choice == "11":
+                store.save(ledger)
+                print("Saved.\n")
+
+            else:
+                print("Invalid option.\n")
+
         except Exception as e:
             print(f"Error: {e}\n")

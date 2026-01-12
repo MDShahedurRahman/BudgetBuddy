@@ -142,5 +142,11 @@ def run() -> None:
                 export_csv(ledger, out_path)
                 print(f"Exported to {out_path}\n")
 
+            elif choice == "10":
+                in_path = Path(_prompt("CSV input path: ")
+                               ).expanduser().resolve()
+                ledger = import_csv(in_path)
+                print("Imported and replaced current ledger.\n")
+
         except Exception as e:
             print(f"Error: {e}\n")
